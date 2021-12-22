@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Doctor;
+use App\Models\Doctors;
 
 
 class HomeController extends Controller
@@ -16,7 +16,8 @@ class HomeController extends Controller
      {
        if(Auth::user()->user_type =='0')
        {
-           return view('user.home');
+         return view('user.home');
+
        }
 
        else
@@ -32,8 +33,8 @@ class HomeController extends Controller
 
     public function index()
     {
-        //get all data from doctors tables
-        $doctor = doctor::all();
-        return view('user.home');
+        
+        $doctor = doctors::all();
+        return view('user.home',compact('doctor'));
     }
 }

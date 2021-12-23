@@ -54,22 +54,14 @@
              @if (session()->has('message'))
         <div class="alert alert-success">
            
-
-
-
             {{session()->get('message')}}
-
-
 
              <button class="close" type = "button" data-dismiss = "alert">
                 x
             </button>
         </div>
-
-
-      
-            
         @endif
+
            <form method="POST" action="{{url('upload_doctor')}}" enctype="multipart/form-data">
 
             @csrf

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Doctors;
+use App\Models\Appointment;
+
 
 
 class HomeController extends Controller
@@ -16,7 +18,9 @@ class HomeController extends Controller
      {
        if(Auth::user()->user_type =='0')
        {
-         return view('user.home');
+         $doctor = doctors::all();
+         return view('user.home',compact('doctor'));
+
 
        }
 
@@ -33,8 +37,38 @@ class HomeController extends Controller
 
     public function index()
     {
+      if(Auth::id())
+      {
+        return redirect('home');
+      }
+
+      else
         
-        $doctor = doctors::all();
+        {
+          $doctor = doctors::all();
         return view('user.home',compact('doctor'));
+        }
+    }
+
+    public function appointment(Request $request)
+    {
+      $data = new appointment;
+
+      $data->name = $request->name;
+      $data->email = $request->email;
+      $data->date = $request->date;
+      $data->phone = $request->phone;
+      $data->message = $request->message;
+      $data->doctor = $request->doctor;
+      $data->status ='In progress';
+
+      if(Auth::id())
+      {
+
+        $data->user_id = Auth::user()->id;
+      }
+
+      $data->save();
+      return redirect()->back()->with('message' , 'Appointment booked ,wait for our call');
     }
 }

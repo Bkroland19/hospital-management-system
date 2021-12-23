@@ -29,4 +29,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::post('/upload_doctor', [AdminController::class ,'upload']);
+Route::post('/appointment', [HomeController::class ,'appointment']);
+
 
